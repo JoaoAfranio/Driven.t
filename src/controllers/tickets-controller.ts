@@ -26,3 +26,18 @@ export async function getTicketByUser(req: AuthenticatedRequest, res: Response) 
     }
   }
 }
+
+export async function createTicket(req: AuthenticatedRequest, res: Response) {
+  const { userId } = req;
+  const { ticketTypeId } = req.body;
+
+  try {
+    const tickets = await ticketService.createTicket({ userId, ticketTypeId });
+
+    return res.status(httpStatus.OK).send(tickets);
+  } catch (error) {
+    if (error.name === "NotFoundError") {
+      return res.send(httpStatus.NOT_FOUND);
+    }
+  }
+}

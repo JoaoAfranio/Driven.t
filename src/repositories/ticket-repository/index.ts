@@ -20,9 +20,23 @@ async function getTicketByUserId(userId: number): Promise<TicketWithTicketType> 
 
 type TicketWithTicketType = Ticket & { TicketType: TicketType };
 
+async function create(ticketTypeId: number, enrollmentId: number) {
+  return prisma.ticket.create({
+    data: {
+      ticketTypeId,
+      enrollmentId,
+      status: "RESERVED",
+    },
+    include: {
+      TicketType: true,
+    },
+  });
+}
+
 const ticketRepository = {
   getAllTicketTypes,
   getTicketByUserId,
+  create,
 };
 
 export default ticketRepository;
