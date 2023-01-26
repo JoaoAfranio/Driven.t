@@ -8,6 +8,14 @@ export async function getAllTicketsType(): Promise<TicketType[]> {
   return ticketRepository.getAllTicketTypes();
 }
 
+export async function getTicketById(ticketId: number) {
+  return ticketRepository.getTicketById(ticketId);
+}
+
+export async function updateStatusTicketToPaid(ticketId: number) {
+  return ticketRepository.changeStatusTicketToPaid(ticketId);
+}
+
 export async function getTicketByUser(userId: number) {
   const result = await ticketRepository.getTicketByUserId(userId);
 
@@ -33,7 +41,9 @@ export type CreateTicketParams = { userId: number; ticketTypeId: number };
 const ticketService = {
   getAllTicketsType,
   getTicketByUser,
+  getTicketById,
   createTicket,
+  updateStatusTicketToPaid,
 };
 
 export default ticketService;
